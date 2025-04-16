@@ -1,0 +1,7 @@
+python-dotenv
+flask
+pyrogram
+TgCrypto-pyrofork
+pydub
+num2words
+pymystem3
