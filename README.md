@@ -1,6 +1,3 @@
-
-![ого](https://media.discordapp.net/attachments/1226698565565550614/1362198191243661392/who_ts_nigga_thinks_she_is.png?ex=6801856d&is=680033ed&hm=8d6b990eb9bdbcea945f30ac63930c712c4c54036557d651fb959b0589165067&=&format=webp&quality=lossless)
-
 # TTS-Wizard-2-Silero-Telegram-Bot
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)
