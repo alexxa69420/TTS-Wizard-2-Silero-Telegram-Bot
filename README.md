@@ -5,7 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues-raw/navendu-pottekkat/awesome-readme)](https://img.shields.io/github/issues-raw/navendu-pottekkat/awesome-readme)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/navendu-pottekkat/awesome-readme)](https://img.shields.io/github/issues-pr/navendu-pottekkat/awesome-readme)
 
-я заебалась сливать ~3к сом в месяц элевенам за то чтобы говорить прикольным голосом, поэтому разработала этот код что ловит запросы от TTS Voice Wizard и кидает их на генерацию к боту @silero_voice_bot в телеграмме (у них дешевая подписка и куча символов в отличии от элевенов), после чего слушает ответ в виде голосового сообщения, которое обратно отдает на проигрывание в ТТС
+я заебалась сливать ~3к сом в месяц элевенам за то чтобы говорить прикольным голосом, поэтому разработала этот код что ловит запросы от TTS Voice Wizard и кидает их на генерацию к боту [@silero_voice_bot](https://t.me/silero_voice_bot) в телеграмме (у них дешевая подписка и куча символов в отличии от элевенов), после чего слушает ответ в виде голосового сообщения, которое обратно отдает на проигрывание в ТТС
 
 # Установка
 
