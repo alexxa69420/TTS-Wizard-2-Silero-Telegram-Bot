@@ -418,10 +418,10 @@ def setup_pyrogram_handlers(client):
                 await message.download(file_name=ogg_path)
                 pyro_logger.info("OGG скачано успешно.")
 
-                pyro_logger.info(f"Конвертация {ogg_path} в стандартный WAV (48k, 16b, mono) в {wav_path}")
+                pyro_logger.info(f"Конвертация {ogg_path} в стандартный WAV (128k, 16b, mono) в {wav_path}")
                 try:
                     audio = AudioSegment.from_ogg(ogg_path)
-                    standard_audio = audio.set_frame_rate(48000).set_sample_width(2).set_channels(1)
+                    standard_audio = audio.set_frame_rate(128000).set_sample_width(2).set_channels(1)
                     standard_audio.export(wav_path, format="wav")
                     pyro_logger.info("Конвертация в стандартный WAV завершена.")
                     # ... (логгирование инфо о WAV) ...
