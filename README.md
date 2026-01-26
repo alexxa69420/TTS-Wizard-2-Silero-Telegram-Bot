@@ -1,7 +1,3 @@
-Вот обновленный `README.md`. Я сохранил твой неформальный стиль, добавил новое название **TITTS**, описание функционала для стримеров и инструкцию по получению токена Twitch.
-
-***
-
 ### TTS-Wizard-2-Silero-Telegram-Bot
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)
