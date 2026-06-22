@@ -1,6 +1,6 @@
 python-dotenv
 flask
-pyrogram
+kurigram
 TgCrypto-pyrofork
 pydub
 num2words
