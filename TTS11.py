@@ -8,18 +8,14 @@ import logging
 import base64
 import tempfile
 from datetime import datetime
-from io import BytesIO
 import time
-import shutil
 import re
-import os
 
 from dotenv import load_dotenv
 from flask import Flask, request, Response, jsonify
-from pyrogram import Client, filters, enums
-from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, FloodWait
+from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
 from pydub import AudioSegment
-from pydub.utils import mediainfo
 from num2words import num2words
 from pymystem3 import Mystem # <<< ИЗМЕНЕНИЕ: Импорт Mystem >>>
 
