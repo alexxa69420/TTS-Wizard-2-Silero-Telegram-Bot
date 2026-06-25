@@ -264,7 +264,7 @@ def handle_synthesize_request(text=''):
     req_logger.info(f"Отправка текста '{text_to_send_to_bot}' боту {TARGET_BOT_USERNAME} ({TARGET_BOT_ID})")
     send_future = asyncio.run_coroutine_threadsafe(send_text_to_bot(text_to_send_to_bot), loop)
     try:
-        sent_successfully = send_future.result(timeout=10)
+        sent_successfully = send_future.result(timeout=20)
         if not sent_successfully:
             raise Exception("Не удалось отправить сообщение боту (async задача вернула не True).")
         req_logger.info("Сообщение успешно отправлено боту.")
@@ -326,26 +326,33 @@ def handle_synthesize_request(text=''):
 # --- Логика Pyrogram (без изменений) ---
 # ... (send_text_to_bot, get_bot_id, setup_pyrogram_handlers, handle_voice_message) ...
 async def send_text_to_bot(text_to_send):
-    # ... (без изменений) ...
     global pyrogram_client, TARGET_BOT_ID
     pyro_logger = logging.getLogger("PyrogramClient")
     if not pyrogram_client or not TARGET_BOT_ID:
         pyro_logger.error("Pyrogram клиент или ID бота не инициализированы для отправки.")
         return False
+    for attempt in range(3):
+        if pyrogram_client.is_connected:
+            break
+        pyro_logger.warning(f"Клиент переподключается, ждём... (попытка {attempt + 1}/3)")
+        await asyncio.sleep(5)
+    else:
+        pyro_logger.error("Клиент не подключён после ожидания.")
+        return False
     try:
         await pyrogram_client.send_message(chat_id=TARGET_BOT_ID, text=text_to_send)
         return True
     except FloodWait as e:
-        pyro_logger.warning(f"Flood wait: {e.value} секунд при отправке '{text_to_send[:50]}...'.")
+        pyro_logger.warning(f"Flood wait: {e.value} секунд при отправке '{text_to_send[:50]}'.")
         await asyncio.sleep(e.value + 1)
         try:
-             await pyrogram_client.send_message(chat_id=TARGET_BOT_ID, text=text_to_send)
-             return True
+            await pyrogram_client.send_message(chat_id=TARGET_BOT_ID, text=text_to_send)
+            return True
         except Exception as inner_e:
-             pyro_logger.error(f"Повторная ошибка при отправке '{text_to_send[:50]}...' боту {TARGET_BOT_USERNAME} после FloodWait: {inner_e}")
-             return False
+            pyro_logger.error(f"Повторная ошибка после FloodWait: {inner_e}")
+            return False
     except Exception as e:
-        pyro_logger.error(f"Ошибка при отправке сообщения '{text_to_send[:50]}...' боту {TARGET_BOT_USERNAME}: {e}")
+        pyro_logger.error(f"Ошибка при отправке боту {TARGET_BOT_USERNAME}: {e}")
         return False
 
 async def get_bot_id():
