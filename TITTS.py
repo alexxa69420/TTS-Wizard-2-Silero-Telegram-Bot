@@ -8,18 +8,15 @@ import logging
 import base64
 import tempfile
 from datetime import datetime
-from io import BytesIO
 import time
-import shutil
 import re
 import ssl # <<< NEW: Для безопасного соединения с Twitch >>>
 
 from dotenv import load_dotenv
 from flask import Flask, request, Response, jsonify
-from pyrogram import Client, filters, enums
-from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, FloodWait
+from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
 from pydub import AudioSegment
-from pydub.utils import mediainfo
 from num2words import num2words
 from pymystem3 import Mystem 
 
@@ -240,7 +237,7 @@ def handle_synthesize_request(text=''):
     req_logger.info(f"Отправка текста '{text_to_send}' боту Telegram...")
     send_future = asyncio.run_coroutine_threadsafe(send_text_to_bot(text_to_send), loop)
     try:
-        sent_successfully = send_future.result(timeout=10)
+        sent_successfully = send_future.result(timeout=20)
         if not sent_successfully:
             raise Exception("Telegram async task returned False")
     except Exception as e:
@@ -377,16 +374,24 @@ async def send_text_to_bot(text_to_send):
     pyro_logger = logging.getLogger("PyrogramClient")
     if not pyrogram_client or not TARGET_BOT_ID:
         return False
+    for attempt in range(3):
+        if pyrogram_client.is_connected:
+            break
+        pyro_logger.warning(f"Клиент переподключается, ждём... (попытка {attempt + 1}/3)")
+        await asyncio.sleep(5)
+    else:
+        pyro_logger.error("Клиент не подключён после ожидания.")
+        return False
     try:
         await pyrogram_client.send_message(chat_id=TARGET_BOT_ID, text=text_to_send)
         return True
     except FloodWait as e:
         await asyncio.sleep(e.value + 1)
         try:
-             await pyrogram_client.send_message(chat_id=TARGET_BOT_ID, text=text_to_send)
-             return True
+            await pyrogram_client.send_message(chat_id=TARGET_BOT_ID, text=text_to_send)
+            return True
         except Exception:
-             return False
+            return False
     except Exception as e:
         pyro_logger.error(f"Ошибка при отправке сообщения боту: {e}")
         return False
