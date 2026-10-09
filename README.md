@@ -1,3 +1,5 @@
+### КОД БОЛЬШЕ НЕ ПОДДЕРЖИВАЕТСЯ. Работоспособность не гарантируется, здесь есть альтернатива более удобная и лучше во всех смыслах, используйте [TTSBard](https://github.com/alksef/TTSBard).
+
 ### TTS-Wizard-2-Silero-Telegram-Bot
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)
